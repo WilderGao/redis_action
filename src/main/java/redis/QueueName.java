@@ -26,7 +26,15 @@ public enum QueueName {
     /**
      * 获得锁的队列名
      */
-    LOCK_QUEUE("queue:lock");
+    LOCK_QUEUE("queue:lock"),
+    /**
+     * 聊天队列名
+     */
+    CHAT_QUEUE("chat:"),
+    /**
+     * 聊天信息队列名
+     */
+    CHAT_MESSAGE("message:");
 
     private String queueName;
 

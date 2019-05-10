@@ -34,7 +34,40 @@ public enum QueueName {
     /**
      * 聊天信息队列名
      */
-    CHAT_MESSAGE("message:");
+    CHAT_MESSAGE("message:"),
+
+    /**
+     * 用户队列名
+     */
+    USER("user:"),
+    /**
+     * 生成用户 Id 队列名
+     */
+    USER_ID("user:id:"),
+    /**
+     * 发布的动态 Id 队列名
+     */
+    STATUS_ID("status:id:"),
+    /**
+     * 用户状态队列名
+     */
+    STATUS("status:"),
+    /**
+     * 个人主页队列名
+     */
+    HOME("home:"),
+    /**
+     * 关注者队列名
+     */
+    FOLLOWERS("followers:"),
+    /**
+     * 正在关注队列名
+     */
+    FOLLOWINGS("followings:"),
+    /**
+     * 关注的人的朋友圈队列
+     */
+    PROFILE("profile:");
 
     private String queueName;
 

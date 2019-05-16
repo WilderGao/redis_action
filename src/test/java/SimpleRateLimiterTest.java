@@ -17,7 +17,7 @@ public class SimpleRateLimiterTest {
         System.out.println("================== 测试简单限流功能 ================");
         Jedis jedis = new Jedis("10.21.56.109", 7000);
         SimpleRateLimiter limiter = new SimpleRateLimiter(jedis);
-        System.out.println("现在请求同一个功能20次，限流是60s内只能请求5次");
+        System.out.println("现在请求同一个功能20次，限流是60s内只能请求10次");
         for (int i = 0; i < 20; i++) {
             if (limiter.isActionAllowed("wilder", "reply", 60, 10)) {
                 System.out.println("第" + i + "次请求成功");

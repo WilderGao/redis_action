@@ -18,9 +18,9 @@ public class SocialTest {
     @Test
     public void userSignTest() throws IOException {
         System.out.println("============= 用户创建测试 =============");
-        Jedis jedis = new Jedis("10.21.56.109", 7000);
+        Jedis jedis = new Jedis("10.21.56.109", 7009);
         SocialUser socialUser = new SocialUser(jedis);
-        String loginAccount = "145236984";
+        String loginAccount = "789456741";
         String name = "nice";
         System.out.println("账号：" + loginAccount + "\n用户名：" + name);
         long uid = socialUser.createUser(loginAccount, name);
@@ -31,9 +31,9 @@ public class SocialTest {
 
     @Test
     public void postStatusTest() {
-        Jedis jedis = new Jedis("10.21.56.109", 7000);
+        Jedis jedis = new Jedis("10.21.56.109", 7009);
         SocialStatus socialStatus = new SocialStatus(jedis);
-        long statusId = socialStatus.createStatus(3, "深入理解Java虚拟机...");
+        long statusId = socialStatus.createStatus(3, "小米9 透明版...");
         Map<String, String> statusInfo = jedis.hgetAll(QueueName.STATUS.getQueueName() + statusId);
         statusInfo.forEach((k, v) -> System.out.println(k + " :" + v));
         jedis.close();
@@ -42,7 +42,7 @@ public class SocialTest {
     @Test
     public void followUserTest(){
         System.out.println("wilder 关注 purple 测试.....");
-        Jedis jedis = new Jedis("10.21.56.109", 7000);
+        Jedis jedis = new Jedis("10.21.56.109", 7009);
         SocialFollower socialFollower = new SocialFollower(jedis);
         System.out.println(socialFollower.followUser(2,3));
         jedis.close();
@@ -51,9 +51,19 @@ public class SocialTest {
     @Test
     public void unFollowUserTest(){
         System.out.println("wilder 取关 purple 测试......");
-        Jedis jedis = new Jedis("10.21.56.109", 7000);
+        Jedis jedis = new Jedis("10.21.56.109", 7009);
         SocialFollower socialFollower = new SocialFollower(jedis);
         System.out.println(socialFollower.unFollowUser(1,3));
         jedis.close();
+    }
+
+    @Test
+    public void commonFollowingTest(){
+        System.out.println("========== 查找 wilder 和 purple 的共同好友 ============");
+        Jedis jedis = new Jedis("10.21.56.109", 7009);
+        SocialFollower socialFollower = new SocialFollower(jedis);
+        socialFollower.commonFollowing(1,2);
+        jedis.close();
+
     }
 }

@@ -2,10 +2,9 @@ package redis.social;
 
 import lombok.AllArgsConstructor;
 import redis.QueueName;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Transaction;
-import redis.clients.jedis.Tuple;
+import redis.clients.jedis.*;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -81,9 +80,24 @@ public class SocialFollower {
         transaction.hincrBy(QueueName.USER.getQueueName() + unFollowId, "followers", -1);
 
         if (followingStatus != null) {
-            followingStatus.forEach(tuple -> transaction.zrem(QueueName.HOME.getQueueName()+uid, tuple.getElement()));
+            followingStatus.forEach(tuple -> transaction.zrem(QueueName.HOME.getQueueName() + uid, tuple.getElement()));
         }
         transaction.exec();
         return true;
     }
+
+    public void commonFollowing(long uid, long ouid) {
+        String user = QueueName.FOLLOWINGS.getQueueName() + uid;
+        String otherUser = QueueName.FOLLOWINGS.getQueueName() + ouid;
+        String common = QueueName.COMMON.getQueueName() + uid + ":" + ouid;
+        jedis.zinterstore(common, user, otherUser);
+        Set<String> commonIds = jedis.zrange(common, 0, -1);
+        commonIds.forEach(v -> {
+            Map<String, String> information = jedis.hgetAll(QueueName.USER.getQueueName() + v);
+            for (Map.Entry<String, String> entry : information.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+            }
+        });
+    }
+
 }

@@ -67,7 +67,11 @@ public enum QueueName {
     /**
      * 关注的人的朋友圈队列
      */
-    PROFILE("profile:");
+    PROFILE("profile:"),
+    /**
+     * 共同好友队列
+     */
+    COMMON("common:");
 
     private String queueName;
 
